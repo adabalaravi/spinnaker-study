@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: sp-microservice
+        app: team3-microservice
         stack: frontend
         source: demo
-    name: sp-microservice
+    name: team3-microservice
     namespace: microservices
 spec:
     replicas: 3
     selector:
         matchLabels:
-            run: sp-microservice
+            run: team3-microservice
     template:
         metadata:
             labels:
-                app: sp-microservice
-                run: sp-microservice
+                app: team3-microservice
+                run: team3-microservice
                 source: demo
         spec:
             containers:
-                -   image: 702037529261.dkr.ecr.us-west-2.amazonaws.com/mild-temper-microservice
-                    name: sp-microservice
+                -   image: 702037529261.dkr.ecr.us-west-2.amazonaws.com/team3-microservice
+                    name: team3-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,13 +31,13 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: sp-microservice-service
-    name: sp-microservice-service
+        app: team3-microservice-service
+    name: team3-microservice-service
     namespace: microservices
 spec:
     selector:
         source: demo
-        app: sp-microservice
+        app: team3-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -51,15 +51,15 @@ kind: Ingress
 metadata:
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: sp-ingress
+    name: team3-ingress
     namespace: microservices
 spec:
     rules:
         -   http:
                 paths:
-                    -   path: /sp(/|$)(.*)
+                    -   path: /team3(/|$)(.*)
                         backend:
-                            serviceName: sp-microservice-service
+                            serviceName: team3-microservice-service
                             servicePort: 30201
 
 
